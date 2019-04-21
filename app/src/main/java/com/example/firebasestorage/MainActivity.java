@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -30,12 +31,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         buttonUpload = (Button) findViewById(R.id.buttonUpload);
         buttonChoose = (Button) findViewById(R.id.buttonChoose);
 
         buttonChoose.setOnClickListener(this);
         buttonUpload.setOnClickListener(this);
 
+        FirebaseApp.initializeApp(this);
         mStorageRef = FirebaseStorage.getInstance().getReference();
 
     }
@@ -75,12 +78,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                             double progress = (100.0 * taskSnapshot.getBytesTransferred()) / taskSnapshot.getTotalByteCount();
-                            progressDialog.setMessage(((int)progress) + "% Uploaded");
+                            progressDialog.setMessage(((int) progress) + "% Uploaded");
                         }
                     });
-        } else {
-
         }
+
     }
 
 
